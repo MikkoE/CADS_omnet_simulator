@@ -10,6 +10,7 @@ RUN apt-get install -y tzdata
 RUN apt-get install -y \
   git \
   wget \
+  tar \
   vim \
   build-essential \
   clang \
@@ -37,7 +38,7 @@ RUN apt-get -f install -y \
   osgearth \
   osgearth-data
 
-RUN apt-get install libosgearth-dev
+#RUN apt-get install libosgearth-dev
 
 
 # OMNeT++ 5
@@ -46,13 +47,8 @@ RUN apt-get install libosgearth-dev
 RUN mkdir -p /usr/omnetpp
 WORKDIR /usr/omnetpp
 
-# Fetch Omnet++ source
-# (Official mirror "doesn't support" command line downloads. Fortunately, we don't care)
-RUN wget --header="Accept: text/html" \
-         --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:21.0) Gecko/20100101 Firefox/21.0" \
-         --referer="https://omnetpp.org" \
-         --output-document=omnetpp-5.2-src.tgz \
-         https://omnetpp.org/omnetpp/send/30-omnet-releases/2317-omnetpp-5-2-linux
+COPY omnetpp-5.4.1-src-linux.tgz /usr/omnetpp
+
 
 RUN tar -xf omnetpp-5.2-src.tgz
 
